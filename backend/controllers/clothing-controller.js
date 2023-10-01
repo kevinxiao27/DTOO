@@ -28,7 +28,7 @@ export const createClothingItem = async (req, res, next) => {
 };
 
 // Controller function to get all clothing items
-exports.getAllClothingItems = async (req, res, next) => {
+export const getAllClothingItems = async (req, res, next) => {
   try {
     const clothingItems = await ClothingItem.find();
     res.status(200).json({ clothingItems });
@@ -59,7 +59,7 @@ export const getClothingItemById = async (req, res, next) => {
 };
 
 // Controller function to update a clothing item by ID
-exports.updateClothingItemById = async (req, res, next) => {
+export const updateClothingItemById = async (req, res, next) => {
   const { clothingItemId } = req.params;
   const updatedClothingItemData = req.body;
 
