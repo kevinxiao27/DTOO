@@ -44,3 +44,29 @@ export const createUser = async (req, res, next) => {
     .status(201)
     .json({ message: "User created successfully", user: newUser });
 };
+
+export const getAllOutfitsByUserId = async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const outfits = await Outfit.find({ user: userId });
+
+    if (!outfits) {
+      return res
+        .status(404)
+        .json({ message: "Outfits not found for the user" });
+    }
+
+    res.status(200).json({ outfits });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error retrieving outfits", error: error.message });
+  }
+};
