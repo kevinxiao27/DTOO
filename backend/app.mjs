@@ -2,12 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user-routes.js"; // Replace with your user routes module
+import outfitRouter from "./routes/outfit-routes.js";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 app.use("/", userRouter);
+app.use("/", outfitRouter);
 
 mongoose
   .connect(
