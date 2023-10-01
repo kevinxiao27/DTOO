@@ -1,16 +1,30 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-dotenv.config();
+import userRouter from "./routes/user-router.js"; // Replace with your user routes module
 
+dotenv.config();
 const app = express();
-const password = process.env.MONGODB_PASSWORD;
+const port = process.env.PORT || 5243;
+
+app.use(express.json());
 
 mongoose
-  .connect(
-    `mongodb+srv://admin:${password}@cluster0.qdkpkrs.mongodb.net/?retryWrites=true&w=majority`
-  )
-  .then(() =>
-    app.listen(5023, () => console.log("Connected to Database and Server"))
-  )
-  .catch((e) => console.log(e));
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to Database");
+
+    // Use the user routes
+    app.use("/user", userRouter);
+
+    // Start the server
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to the database:", error);
+  });

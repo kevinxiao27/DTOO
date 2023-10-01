@@ -1,32 +1,20 @@
-const User = require("../models/User.js");
-
 // Controller function to get all users
-exports.getAllUsers = async (req, res) => {
+
+import User from "../models/User";
+
+export const getAllUsers = async (req, res, next) => {
+  let users;
   try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving users", error: error.message });
+    users = await User.find();
+  } catch (err) {
+    return console.log(err);
   }
-};
-
-// Controller function to search for a user by ID
-exports.getUserById = async (req, res) => {
-  const userId = req.params.userId;
-
-  try {
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.json(user);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving user", error: error.message });
+  if (!users) {
+    return res.status(500).json({ message: "Unexpected Error Occured" });
+    // 500 is failure
   }
+
+  return res.status(200).json({ users });
+  //200 is success
+  // syntax { users } does not need to specify {users: user} because it is es6
 };

@@ -1,11 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const UserController = require("./controllers/userController"); // Import your user controller
+import express from "express";
+import getAllUsers from "./controllers/user-controller.js";
+
+const userRouter = express.Router();
 
 // Route to get all users
-router.get("/users", UserController.getAllUsers);
+userRouter.get("/", getAllUsers);
 
-// Route to search for a user by ID
-router.get("/users/:userId", UserController.getUserById);
-
-module.exports = router;
+export default userRouter;
