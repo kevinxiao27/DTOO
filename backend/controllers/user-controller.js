@@ -19,4 +19,28 @@ export const getAllUsers = async (req, res, next) => {
   // syntax { users } does not need to specify {users: user} because it is es6
 };
 
-export default getAllUsers;
+export const createUser = async (req, res, next) => {
+  const { username, email, password, profilePicture, eCommerce } = req.body;
+
+  // Create a new User instance
+  const newUser = new User({
+    username,
+    email,
+    password,
+    profilePicture,
+    eCommerce,
+  });
+
+  try {
+    // Save the new user to the database
+    await newUser.save();
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Failed to create user", error: err.message });
+  }
+
+  return res
+    .status(201)
+    .json({ message: "User created successfully", user: newUser });
+};
