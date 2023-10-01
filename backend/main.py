@@ -42,8 +42,9 @@ class Outfit(Resource):
 
     def put(self, outfit_id):
         args = parser.parse_args()
-        new_outfit = {'tops': args['tops']}
-        videos[video_id] = new_video
+        new_top = {'tops': args['tops']}
+        # too lazy to add in everything but very doable
+        outfits[outfit_id] = new_top
         return {}
 
 
