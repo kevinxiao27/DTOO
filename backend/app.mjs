@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user-routes.js"; // Replace with your user routes module
 import outfitRouter from "./routes/outfit-routes.js";
+import clothingRouter from "./routes/clothing-routes.js";
 
 dotenv.config();
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use("/", userRouter);
 app.use("/", outfitRouter);
+app.use("/", clothingRouter);
 
 mongoose
   .connect(
